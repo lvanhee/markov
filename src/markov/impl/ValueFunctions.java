@@ -221,6 +221,14 @@ public class ValueFunctions {
 		.forEach(x->System.out.println(x+" "+val.apply(x)));
 	}
 
+	public static<S extends State> double 
+	getWorseValue(Set<S> states, GeneralizedValueFunction<S, Double> valueFunction) {
+		return states
+				.parallelStream()
+				.map(x->valueFunction.apply(x))
+				.min(Double::compare).get();
+	}
+
 
 
 }

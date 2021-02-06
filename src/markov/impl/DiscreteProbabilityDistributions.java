@@ -13,5 +13,4 @@ public class DiscreteProbabilityDistributions {
 	{
 		return d.getItems().stream().max((x,y)->Double.compare(d.getProbabilityOf(x), d.getProbabilityOf(y))).get();
 	}
-
 }

@@ -3,4 +3,5 @@ module markov {
 	exports markov;
 	exports markov.probas;
 	exports markov.impl;
+	exports markov.caches;
 }
