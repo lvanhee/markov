@@ -18,7 +18,8 @@ import markov.MDP;
 import markov.Policy;
 import markov.StateProbabilityDistribution;
 import markov.caches.HashMapBasedCache;
-import markov.impl.MDPFunctionImpl;
+import markov.impl.FunctionBasedMDPImpl;
+import markov.impl.MDPs;
 import markov.impl.Policies;
 import markov.impl.StateProbabilityDistributionHashImpl;
 import markov.impl.ValueFunctions;
@@ -58,7 +59,7 @@ public class MinimalMain {
 		
 		Function<State, Set<Action>> actionsPerState = s-> allActions;
 		
-		MDP<State, Action> mdp = MDPFunctionImpl.newInstance(states, transition, onState3RewardFunction, actionsPerState);
+		MDP<State, Action> mdp = FunctionBasedMDPImpl.newInstance(states, transition, onState3RewardFunction, actionsPerState);
 		
 		
 		//------------------------------------------------------------THIS BLOC SHOWS HOW TO RELATE MDPs TO POLICIES AND VALUES
@@ -80,6 +81,8 @@ public class MinimalMain {
 		System.out.println("\nOptimal policy: ");
 		Policies.printPolicy(mdp,valueIterationPolicy);
 		ValueFunctions.printValuePerState(mdp, valueVIPolicy);
+		
+		System.out.println(MDPs.toGraphviz(mdp));
 	}
 	
 	

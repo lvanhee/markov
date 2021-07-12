@@ -16,14 +16,14 @@ import markov.StateProbabilityDistribution;
  * @param <S>
  * @param <A>
  */
-public class MDPFunctionImpl<S extends State, A extends Action> implements MDP<S,A> {
+public class FunctionBasedMDPImpl<S extends State, A extends Action> implements MDP<S,A> {
 	
 	private final BiFunction<S, A, StateProbabilityDistribution<S>> transitionFunction;
 	private final BiFunction<S, A, Double> rewardFunction;
 	private final Function<S, Set<A>> possibleActionsPerStateOf;
 	private final Set<S> states;
 	
-	private MDPFunctionImpl(
+	private FunctionBasedMDPImpl(
 			Set<S> states,
 			BiFunction<S, A, StateProbabilityDistribution<S>> transitionFunction,
 			BiFunction<S, A, Double> rewardFunction,
@@ -35,12 +35,12 @@ public class MDPFunctionImpl<S extends State, A extends Action> implements MDP<S
 		this.possibleActionsPerStateOf = actionsPerState;
 	}
 
-	public static <S extends State, A extends Action> MDPFunctionImpl<S, A> newInstance(
+	public static <S extends State, A extends Action> FunctionBasedMDPImpl<S, A> newInstance(
 			Set<S>states,
 			BiFunction<S, A, StateProbabilityDistribution<S>> transition,
 			BiFunction<S, A, Double> reward,
 			Function<S, Set<A>> actionsPerState) {
-		return new MDPFunctionImpl<S, A>(states,transition,reward,actionsPerState);
+		return new FunctionBasedMDPImpl<S, A>(states,transition,reward,actionsPerState);
 	}
 	
 	@Override
