@@ -1,12 +1,8 @@
 package markov.impl;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,7 +16,6 @@ import markov.MDP;
 import markov.Policy;
 import markov.StateProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistribution;
-import markov.probas.DiscreteProbabilityDistributionImpl;
 import markov.probas.DiscreteProbabilityDistributionAccuracyParameters;
 
 /**
@@ -31,7 +26,7 @@ import markov.probas.DiscreteProbabilityDistributionAccuracyParameters;
 public class ValueFunctions {
 
 	public static<S extends State, A extends Action> GeneralizedValueFunction<S, Double> 
-	getAverageValueOf(
+	getValueFunctionBasedOnExpectedValue(
 			MDP<S,A> mdp,
 			Policy<S, A> policy, 
 			int horizon,
@@ -47,7 +42,7 @@ public class ValueFunctions {
 	}
 
 	public static<S extends State, A extends Action> double 
-	getValue(MDP<S, A> mdp,S currentState,int horizon,Policy<S, A> policy) {
+	getExpectedValueFromState(MDP<S, A> mdp,S currentState,int horizon,Policy<S, A> policy) {
 		return ValueFunctions.getValue(mdp, 
 				currentState,
 				horizon, 
@@ -205,13 +200,13 @@ public class ValueFunctions {
 	}
 
 	public static<S extends State, A extends Action> GeneralizedValueFunction<S, Double> 
-	getAverageValueOf(
+	getValueFunctionBasedOnExpectedValue(
 			MDP<S,A> mdp,
 			Policy<S, A> policy, 
 			int horizon
 			)
 	{
-		return getAverageValueOf(mdp, policy, horizon, HashMapBasedCache.newInstance());
+		return getValueFunctionBasedOnExpectedValue(mdp, policy, horizon, HashMapBasedCache.newInstance());
 	}
 
 	public static <S extends State, A extends Action, V>  void	printValuePerState(MDP<S, A> mdp, GeneralizedValueFunction<S, V> val) {

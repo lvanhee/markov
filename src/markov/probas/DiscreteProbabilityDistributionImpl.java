@@ -239,7 +239,7 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 	
 	public static<V> DiscreteProbabilityDistribution<V> newInstance(DiscreteProbabilityDistribution<V> v,
 			DiscreteProbabilityDistributionAccuracyParameters precision) {
+		if(v.getItems().size()<precision.getNumberOfItems())return v;
 		return newInstance(v.getMap(),precision);
 	}
-
 }

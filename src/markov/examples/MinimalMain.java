@@ -70,13 +70,13 @@ public class MinimalMain {
 		Policies.printPolicy(mdp, myHandCraftedPolicy);
 		
 		//the cache is not mandatory but allows re-using computations for a later time, when computing the value becomes expensive
-		GeneralizedValueFunction<State,Double> valHandcrafted = ValueFunctions.getAverageValueOf(mdp, myHandCraftedPolicy, 10);
+		GeneralizedValueFunction<State,Double> valHandcrafted = ValueFunctions.getValueFunctionBasedOnExpectedValue(mdp, myHandCraftedPolicy, 10);
 		ValueFunctions.printValuePerState(mdp, valHandcrafted);
 		
 		
 		//------------------------------------------------------------AUTOMATIC GENERATION OF OPTIMAL POLICY
 		Policy<State, Action> valueIterationPolicy = Policies.getOptimalPolicy(mdp,10);
-		GeneralizedValueFunction<State, Double> valueVIPolicy = ValueFunctions.getAverageValueOf(mdp, valueIterationPolicy, 10);
+		GeneralizedValueFunction<State, Double> valueVIPolicy = ValueFunctions.getValueFunctionBasedOnExpectedValue(mdp, valueIterationPolicy, 10);
 		System.out.println("\nOptimal policy: ");
 		Policies.printPolicy(mdp,valueIterationPolicy);
 		ValueFunctions.printValuePerState(mdp, valueVIPolicy);
