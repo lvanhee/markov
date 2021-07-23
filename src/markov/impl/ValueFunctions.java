@@ -11,17 +11,17 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import cachingutils.Cache;
+import cachingutils.HashMapBasedCache;
 import finitestatemachine.Action;
 import finitestatemachine.State;
 import markov.GeneralizedValueFunction;
 import markov.MDP;
 import markov.Policy;
 import markov.StateProbabilityDistribution;
-import markov.caches.Cache;
-import markov.caches.HashMapBasedCache;
 import markov.probas.DiscreteProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistributionImpl;
-import markov.probas.DiscreteProbabilityDistributionParameters;
+import markov.probas.DiscreteProbabilityDistributionAccuracyParameters;
 
 /**
  * 
@@ -134,7 +134,7 @@ public class ValueFunctions {
 			Function<S, Set<A>>allowedActions,
 			BiFunction<V, Double, V> valueAdder,
 			Function<DiscreteProbabilityDistribution<V>, V> merger,
-			DiscreteProbabilityDistributionParameters parameters,
+			DiscreteProbabilityDistributionAccuracyParameters parameters,
 			List<Object[]> cache
 			)
 	{
@@ -187,7 +187,7 @@ public class ValueFunctions {
 			Function<S, Set<A>> filtring,
 			Function<DiscreteProbabilityDistribution<V>, V> merger,
 			Comparator<V> comparator,
-			DiscreteProbabilityDistributionParameters probabilityDistributionParameters
+			DiscreteProbabilityDistributionAccuracyParameters probabilityDistributionParameters
 			)
 	{
 		V best = null;

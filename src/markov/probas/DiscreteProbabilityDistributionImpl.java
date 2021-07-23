@@ -206,7 +206,7 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 
 	public static<T> DiscreteProbabilityDistribution<T> newInstanceMerge(
 			Map<DiscreteProbabilityDistribution<T>,
-			Double> m2, DiscreteProbabilityDistributionParameters params) {
+			Double> m2, DiscreteProbabilityDistributionAccuracyParameters params) {
 		Map<T, Double> res = new HashMap<T, Double>();
 		for(DiscreteProbabilityDistribution<T> m:m2.keySet())
 			for(T t: m.getItems())
@@ -226,15 +226,20 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 	}
 
 	public static<V> DiscreteProbabilityDistribution<V> newInstance(Map<V, Double> probabilityPerValue,
-			DiscreteProbabilityDistributionParameters params) {
+			DiscreteProbabilityDistributionAccuracyParameters params) {
 		return newInstance(probabilityPerValue, params.getMergeFactor(), params.getNumberOfItems());
 	}
 
 	public static<V> DiscreteProbabilityDistribution<V> newInstance(V v,
-			DiscreteProbabilityDistributionParameters precision) {
+			DiscreteProbabilityDistributionAccuracyParameters precision) {
 		Map<V,Double> m = new HashMap<V, Double>();
 		m.put(v,1d);
 		return newInstance(m,precision);
+	}
+	
+	public static<V> DiscreteProbabilityDistribution<V> newInstance(DiscreteProbabilityDistribution<V> v,
+			DiscreteProbabilityDistributionAccuracyParameters precision) {
+		return newInstance(v.getMap(),precision);
 	}
 
 }

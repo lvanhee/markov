@@ -17,7 +17,6 @@ import markov.GeneralizedValueFunction;
 import markov.MDP;
 import markov.Policy;
 import markov.StateProbabilityDistribution;
-import markov.caches.HashMapBasedCache;
 import markov.impl.FunctionBasedMDPImpl;
 import markov.impl.MDPs;
 import markov.impl.Policies;

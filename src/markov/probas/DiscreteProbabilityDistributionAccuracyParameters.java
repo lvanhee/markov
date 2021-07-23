@@ -11,14 +11,14 @@ package markov.probas;
  * @author loisv
  *
  */
-public class DiscreteProbabilityDistributionParameters {
+public class DiscreteProbabilityDistributionAccuracyParameters {
 
-	public static final DiscreteProbabilityDistributionParameters EXACT_MODEL = 
-			new DiscreteProbabilityDistributionParameters(Integer.MAX_VALUE, 0d);
+	public static final DiscreteProbabilityDistributionAccuracyParameters EXACT_MODEL = 
+			new DiscreteProbabilityDistributionAccuracyParameters(Integer.MAX_VALUE, 0d);
 	final int nbOfItems;
 	final double minimumPrecision;
 	
-	public DiscreteProbabilityDistributionParameters(int nbOfItems, double minimumPrecision)
+	public DiscreteProbabilityDistributionAccuracyParameters(int nbOfItems, double minimumPrecision)
 	{
 		this.nbOfItems = nbOfItems;
 		this.minimumPrecision = minimumPrecision;

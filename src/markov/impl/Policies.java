@@ -28,7 +28,7 @@ import markov.Policy;
 import markov.StateProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistributionImpl;
-import markov.probas.DiscreteProbabilityDistributionParameters;
+import markov.probas.DiscreteProbabilityDistributionAccuracyParameters;
 
 /**
  * 
@@ -90,7 +90,7 @@ public class Policies {
 			Function<S, V>currentValuePerState,
 			BiFunction<V, Double, V> valueAdder,
 			Function<DiscreteProbabilityDistribution<V>,V> valueDistributionMerger, 
-			DiscreteProbabilityDistributionParameters params
+			DiscreteProbabilityDistributionAccuracyParameters params
 			) {
 			
 			

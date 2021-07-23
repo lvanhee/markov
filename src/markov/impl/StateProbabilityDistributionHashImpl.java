@@ -6,7 +6,7 @@ import finitestatemachine.State;
 import markov.StateProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistribution;
 import markov.probas.DiscreteProbabilityDistributionImpl;
-import markov.probas.DiscreteProbabilityDistributionParameters;
+import markov.probas.DiscreteProbabilityDistributionAccuracyParameters;
 
 
 /**
@@ -50,18 +50,18 @@ public class StateProbabilityDistributionHashImpl<S extends State> implements St
 	public static<S extends State> StateProbabilityDistributionHashImpl<S> newInstance(Map<S, Double> m) {
 		return new StateProbabilityDistributionHashImpl<S>(
 				DiscreteProbabilityDistributionImpl.newInstance(m, 
-						DiscreteProbabilityDistributionParameters.EXACT_MODEL));
+						DiscreteProbabilityDistributionAccuracyParameters.EXACT_MODEL));
 	}
 
 	public static<S extends State> StateProbabilityDistributionHashImpl<S> newInstance(S newInstance) {
 		DiscreteProbabilityDistribution<S> pd = DiscreteProbabilityDistributionImpl.newInstance(
 				newInstance, 
-				DiscreteProbabilityDistributionParameters.EXACT_MODEL);
+				DiscreteProbabilityDistributionAccuracyParameters.EXACT_MODEL);
 		return new StateProbabilityDistributionHashImpl<>(pd);
 	}
 	
 	public static <S extends State> StateProbabilityDistributionHashImpl<S> mergeWeightedDistributions(
-			Map<StateProbabilityDistribution<S>, Double> distribution, DiscreteProbabilityDistributionParameters params) {
+			Map<StateProbabilityDistribution<S>, Double> distribution, DiscreteProbabilityDistributionAccuracyParameters params) {
 		return new StateProbabilityDistributionHashImpl<>(DiscreteProbabilityDistributionImpl.newInstanceMerge((Map)distribution, params));
 	}
 
