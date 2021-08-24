@@ -26,7 +26,7 @@ public class PairImpl<L, R> {
 	
 	public int hashCode() {return (l.hashCode()+1) * r.hashCode();}
 	
-	public String toString() {return l+","+r;}
+	public String toString() {return "("+l+","+r+")";}
 
 	public static<T1, T2> PairImpl<T1, T2> newInstance(T1 o1, T2 o2) {
 		return new PairImpl<T1, T2>(o1,o2);

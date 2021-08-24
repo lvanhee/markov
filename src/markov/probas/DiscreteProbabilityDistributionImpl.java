@@ -26,30 +26,33 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 
 	private Map<T, Double> m;
 	private final int hashCodeCache;
+	private final DiscreteProbabilityDistributionAccuracyParameters precision;
 	
-	private DiscreteProbabilityDistributionImpl(Map<T, Double> m2, double mergeFactor, int maxNumberofItems) {
+	private DiscreteProbabilityDistributionImpl(Map<T, Double> m2, DiscreteProbabilityDistributionAccuracyParameters prob) {
 		assert(!m2.isEmpty());
 		assert(m2.values().stream().allMatch(x->x>=0d));
 		assert(m2.values().stream().reduce(Double::sum).get()>0.99);
 		assert(m2.values().stream().reduce(Double::sum).get()<1.01);
 		assert(!m2.containsKey(null));
 		
+		this.precision = prob;
+		
 		this.m = m2.keySet()
 				.stream()
 				.collect(Collectors.toMap(Function.identity(), x->m2.get(x)));
 				
 		
-		initmergeForDouble(maxNumberofItems, mergeFactor);
+		initmergeForDouble(prob.getNumberOfItems(), prob.getMergeFactor());
 		
 		
 		this.m = m.keySet()
 				.stream()
-				.filter(x->m.get(x)>mergeFactor)
+				.filter(x->m.get(x)>prob.getMergeFactor())
 				.collect(Collectors.toMap(Function.identity(), x->m.get(x)));
 		
 		
 		double removed = 1d - m.values().stream().reduce(0d, (x,y)->x+y);
-		while(m.size()>maxNumberofItems)
+		while(m.size()>prob.getNumberOfItems())
 		{
 			T min = m.keySet().stream().min((x,y)->
 			Double.compare(m.get(x), m.get(y))).get();
@@ -222,10 +225,10 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 	}
 
 	public static<T> DiscreteProbabilityDistributionImpl<T> newInstance(Map<T, Double> m, double mergeFactor, int maxNumberofItems) {
-		return new DiscreteProbabilityDistributionImpl<T>(m, mergeFactor, maxNumberofItems);
+		return new DiscreteProbabilityDistributionImpl<T>(m, DiscreteProbabilityDistributionAccuracyParameters.newInstance(mergeFactor,maxNumberofItems));
 	}
 
-	public static<V> DiscreteProbabilityDistribution<V> newInstance(Map<V, Double> probabilityPerValue,
+	public static<V> DiscreteProbabilityDistributionImpl<V> newInstance(Map<V, Double> probabilityPerValue,
 			DiscreteProbabilityDistributionAccuracyParameters params) {
 		return newInstance(probabilityPerValue, params.getMergeFactor(), params.getNumberOfItems());
 	}
@@ -241,5 +244,9 @@ public class DiscreteProbabilityDistributionImpl<T> implements DiscreteProbabili
 			DiscreteProbabilityDistributionAccuracyParameters precision) {
 		if(v.getItems().size()<precision.getNumberOfItems())return v;
 		return newInstance(v.getMap(),precision);
+	}
+
+	public DiscreteProbabilityDistributionAccuracyParameters getProbabilityPrecision() {
+		return precision;
 	}
 }

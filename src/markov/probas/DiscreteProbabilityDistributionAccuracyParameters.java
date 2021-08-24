@@ -31,4 +31,9 @@ public class DiscreteProbabilityDistributionAccuracyParameters {
 	public double getMergeFactor() {
 		return minimumPrecision;
 	}
+
+	public static DiscreteProbabilityDistributionAccuracyParameters newInstance(double mergeFactor,
+			int maxNumberofItems) {
+		return new DiscreteProbabilityDistributionAccuracyParameters(maxNumberofItems, mergeFactor);
+	}
 }

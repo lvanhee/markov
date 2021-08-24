@@ -20,6 +20,8 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import finitestatemachine.Action;
 import finitestatemachine.State;
 import markov.GeneralizedValueFunction;
@@ -74,7 +76,7 @@ public class Policies {
 			Function<String, S> parserState, Function<String, A> parserAction, int horizon) {
 		try {
 			
-			if(!Files.exists(Paths.get(string)))return getOptimalPolicy(mdp, horizon);
+			if(!Files.exists(Paths.get(string)))return getOptimalPolicy(mdp, horizon, false);
 
 			Map<S, A> res = new HashMap<>();
 			for(String s: Files.readAllLines(Paths.get(string)))
@@ -116,7 +118,7 @@ public class Policies {
 		return x-> Arrays.asList(p.apply(x)).stream().collect(Collectors.toSet());
 	}
 
-	public static<S extends State, A extends Action> Policy<S, A> getOptimalPolicy(MDP<S, A> mdp, int horizon) {
+	public static<S extends State, A extends Action> Policy<S, A> getOptimalPolicy(MDP<S, A> mdp, int horizon, boolean deterministic) {
 		
 		//initialization
 		GeneralizedValueFunction<S, Double>value = x->0d;
@@ -125,7 +127,9 @@ public class Policies {
 		{
 			final GeneralizedValueFunction<S, Double>currentValue = value;
 			
-			Map<S,Double> next = allStates.parallelStream().collect(
+			Stream<S> stream = allStates.parallelStream();
+			if(deterministic)allStates.stream();
+			Map<S,Double> next = stream.collect(
 					Collectors.toMap(Function.identity(), 
 							s->getValueBestAction(mdp,s,currentValue)));
 			value = x->next.get(x);
@@ -141,7 +145,8 @@ public class Policies {
 	}
 	
 	private static <S extends State, A extends Action> A getBestAction(MDP<S,A> mdp, S s, GeneralizedValueFunction<S, Double> currentValue)
-	{			
+	{
+		if(mdp.getPossibleActionsIn(s).isEmpty())throw new Error("No action defined from \""+s+"\". Define at least one action for this state");
 		return mdp.getPossibleActionsIn(s).stream().max((a1,a2)-> Double.compare(getValueForAction(mdp,s,a1,currentValue),getValueForAction(mdp,s,a2,currentValue))).get();			
 	}
 	

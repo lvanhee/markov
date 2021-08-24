@@ -75,7 +75,7 @@ public class MinimalMain {
 		
 		
 		//------------------------------------------------------------AUTOMATIC GENERATION OF OPTIMAL POLICY
-		Policy<State, Action> valueIterationPolicy = Policies.getOptimalPolicy(mdp,10);
+		Policy<State, Action> valueIterationPolicy = Policies.getOptimalPolicy(mdp,10,false);
 		GeneralizedValueFunction<State, Double> valueVIPolicy = ValueFunctions.getValueFunctionBasedOnExpectedValue(mdp, valueIterationPolicy, 10);
 		System.out.println("\nOptimal policy: ");
 		Policies.printPolicy(mdp,valueIterationPolicy);
